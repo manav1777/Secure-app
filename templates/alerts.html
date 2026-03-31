@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alerts</title>
+</head>
+<body>
+    <h1>Suspicious Activity Alerts</h1>
+
+    {% if alerts %}
+        <ul>
+        {% for a in alerts %}
+            <li>{{ a }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No suspicious activity detected.</p>
+    {% endif %}
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
