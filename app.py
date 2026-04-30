@@ -6,105 +6,115 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 bcrypt = Bcrypt(app)
 
-# In-memory users dictionary with hashed passwords
+# Users (demo account)
 users = {
     "jack": bcrypt.generate_password_hash("jack").decode("utf-8"),
-    # add more users here
 }
 
-# Temporary storage for comments
-comments = []
 
-# Logging function
+# ---------------- LOGGING ----------------
 def log_activity(username, action, ip):
     timestamp = datetime.datetime.now()
     line = f"{timestamp} | {username} | {action} | {ip}"
-    print("Logging:", line)  # debug print
+    print("Logging:", line)
+
     with open("logs.txt", "a") as f:
         f.write(line + "\n")
 
 
-#Home
+# ---------------- LANDING PAGE ----------------
 @app.route("/")
-def index():
-    if "username" not in session:
-        return "Access Denied – please <a href='/login'>login</a>"
+def home():
+    return render_template("landing.html")
 
-    # Read logs to count alerts
-    failed_logins = {}
-    injection_attempts = 0
+
+# ---------------- DEMO LOGIN ----------------
+@app.route("/demo")
+def demo():
+    session["username"] = "demo"
+    log_activity("demo", "demo_login", request.remote_addr)
+    return redirect("/dashboard")
+
+
+@app.route("/dashboard")
+def dashboard():
+    if "username" not in session:
+        return redirect("/login")
+
     try:
         with open("logs.txt", "r") as f:
             lines = f.readlines()
     except FileNotFoundError:
         lines = []
 
+    activity_feed = []
+
+    failed_logins = {}
+    injection_attempts = 0
+
     for line in lines:
         parts = line.strip().split("|")
         if len(parts) < 4:
             continue
+
         timestamp, username, action, ip = [p.strip() for p in parts]
+
+        # Build activity feed
+        activity_feed.append({
+            "time": timestamp,
+            "user": username,
+            "action": action,
+            "ip": ip
+        })
+
+        # Alerts logic
         if action == "login_failed":
             failed_logins[username] = failed_logins.get(username, 0) + 1
+
         if "injection" in action:
             injection_attempts += 1
 
-    # Count alerts
     alert_count = sum(1 for c in failed_logins.values() if c >= 3) + injection_attempts
 
-    return render_template("index.html", username=session["username"], alert_count=alert_count)
+    return render_template(
+        "index.html",
+        username=session["username"],
+        alert_count=alert_count,
+        activity_feed=activity_feed
+    )
 
-# Login route
+
+# ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        print(f"Attempting login: {username} / {password}")  # debug print
 
-        # temporary bypass for testing
-        if username == "jack" and password == "jack":
+        user_password = users.get(username)
+
+        if user_password and bcrypt.check_password_hash(user_password, password):
             session["username"] = username
-            print("Login successful")  # debug print
-            return redirect("/")
-
-        return "Login Failed"
+            log_activity(username, "login_success", request.remote_addr)
+            return redirect("/dashboard")
+        else:
+            log_activity(username, "login_failed", request.remote_addr)
+            return "Login Failed"
 
     return render_template("login.html")
 
 
-# Comment route
-@app.route("/comment", methods=["GET", "POST"])
-def comment():
-    if "username" not in session:
-        return redirect("/login")
-
-    if request.method == "POST":
-        content = request.form["content"]
-        username = session["username"]
-        ip = request.remote_addr
-
-        # Save comment
-        comments.append({"user": username, "content": content})
-        
-        # Log the action
-        log_activity(username, "comment_posted", ip)
-
-        return redirect("/comment")
-
-    return render_template("comment.html", comments=comments)
-
-# Logout route
+# ---------------- LOGOUT ----------------
 @app.route("/logout")
 def logout():
     if "username" in session:
-        username = session["username"]
-        ip = request.remote_addr
-        log_activity(username, "logout", ip)
-    session.pop("username", None)
-    return redirect("/login")
+        log_activity(session["username"], "logout", request.remote_addr)
 
-# Suspicious activity dashboard
+    session.pop("username", None)
+    return redirect("/")
+
+
+# ---------------- ALERTS PAGE ----------------
 @app.route("/alerts")
 def alerts():
     failed_logins = {}
@@ -120,14 +130,15 @@ def alerts():
         parts = line.strip().split("|")
         if len(parts) < 4:
             continue
+
         timestamp, username, action, ip = [p.strip() for p in parts]
 
         if action == "login_failed":
             failed_logins[username] = failed_logins.get(username, 0) + 1
+
         if "injection" in action:
             injection_attempts.append(f"{timestamp} | {username} | {ip}")
 
-    # Build alerts
     alerts_list = []
 
     for user, count in failed_logins.items():
@@ -139,9 +150,12 @@ def alerts():
 
     return render_template("alerts.html", alerts=alerts_list)
 
+
+# ---------------- ALERT COUNT API ----------------
 @app.route("/alert_count")
 def alert_count():
     count = 0
+
     try:
         with open("logs.txt", "r") as f:
             lines = f.readlines()
@@ -155,20 +169,24 @@ def alert_count():
         parts = line.strip().split("|")
         if len(parts) < 4:
             continue
+
         timestamp, username, action, ip = [p.strip() for p in parts]
 
         if action == "login_failed":
             failed_logins[username] = failed_logins.get(username, 0) + 1
+
         if "injection" in action:
             injection_attempts += 1
 
     for user, c in failed_logins.items():
         if c >= 3:
             count += 1
+
     count += injection_attempts
 
     return {"count": count}
 
 
+# ---------------- RUN APP ----------------
 if __name__ == "__main__":
     app.run(debug=True)

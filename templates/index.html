@@ -1,14 +1,45 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
-{% block content %}
-<h2>Welcome, {{ username }}!</h2>
+{% block title %}Security Dashboard{% endblock %}
 
+{% block content %}
+
+<h2>Security Monitoring Dashboard</h2>
+
+<p>Welcome, {{ username }} 👋</p>
+
+<!-- STATUS SECTION -->
 {% if alert_count and alert_count > 0 %}
-<div class="alert">
-    You have {{ alert_count }} alert{% if alert_count > 1 %}s{% endif %} on the system.
+<div style="background:#ffdddd; padding:12px; border-radius:8px;">
+    ⚠ Security Alerts: {{ alert_count }}
+</div>
+{% else %}
+<div style="background:#ddffdd; padding:12px; border-radius:8px;">
+    ✅ System Status: Normal
 </div>
 {% endif %}
 
-<a href="/comment">Post a Comment</a><br>
+<br>
+
+<!-- ACTIVITY FEED -->
+<h3>Activity Feed</h3>
+
+<div style="background:#f4f4f4; padding:15px; border-radius:10px; max-height:350px; overflow-y:auto; text-align:left;">
+
+    {% for item in activity_feed %}
+        <div style="margin-bottom:10px;">
+            <b>{{ item.time }}</b><br>
+            User: {{ item.user }} <br>
+            Action: {{ item.action }} <br>
+            IP: {{ item.ip }}
+            <hr>
+        </div>
+    {% endfor %}
+
+</div>
+
+<br>
+
+<a href="/alerts">View Alerts</a> |
 <a href="/logout">Logout</a>
+
 {% endblock %}
