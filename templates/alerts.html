@@ -1,21 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Alerts</title>
+    <title>Security Alerts</title>
+
+    <style>
+        body {
+            background:#0f172a;
+            color:white;
+            font-family:Arial;
+            padding:40px;
+        }
+
+        .alert-card {
+            background:#7f1d1d;
+            padding:18px;
+            border-radius:12px;
+            margin-bottom:15px;
+        }
+
+        a {
+            color:#60a5fa;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Suspicious Activity Alerts</h1>
 
-    {% if alerts %}
-        <ul>
-        {% for a in alerts %}
-            <li>{{ a }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No suspicious activity detected.</p>
-    {% endif %}
+<h1>⚠ Security Alerts Center</h1>
 
-    <a href="/">Back to Home</a>
+{% if alerts %}
+
+    {% for a in alerts %}
+        <div class="alert-card">
+            {{ a }}
+        </div>
+    {% endfor %}
+
+{% else %}
+
+    <div style="background:#14532d; padding:18px; border-radius:12px;">
+        ✅ No suspicious activity detected
+    </div>
+
+{% endif %}
+
+<br>
+
+<a href="/dashboard">Back to Dashboard</a>
+
 </body>
 </html>

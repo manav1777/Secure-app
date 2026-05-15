@@ -114,6 +114,25 @@ def logout():
     return redirect("/")
 
 
+#----------------- Register -----------------
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    message = ""
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        if username in users:
+            message = "Username already exists"
+        else:
+            hashed = bcrypt.generate_password_hash(password).decode("utf-8")
+            users[username] = hashed
+            message = "Account created successfully. You can now login."
+
+    return render_template("register.html", message=message)
+
 # ---------------- ALERTS PAGE ----------------
 @app.route("/alerts")
 def alerts():

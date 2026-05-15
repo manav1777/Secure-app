@@ -9,12 +9,12 @@
 
 <!-- STATUS SECTION -->
 {% if alert_count and alert_count > 0 %}
-<div style="background:#ffdddd; padding:12px; border-radius:8px;">
-    ⚠ Security Alerts: {{ alert_count }}
+<div class="alert-box">
+    ⚠ Threat Alerts Detected: {{ alert_count }}
 </div>
 {% else %}
-<div style="background:#ddffdd; padding:12px; border-radius:8px;">
-    ✅ System Status: Normal
+<div class="safe-box">
+    ✅ System Security Status Normal
 </div>
 {% endif %}
 
@@ -23,17 +23,46 @@
 <!-- ACTIVITY FEED -->
 <h3>Activity Feed</h3>
 
-<div style="background:#f4f4f4; padding:15px; border-radius:10px; max-height:350px; overflow-y:auto; text-align:left;">
+<div class="feed-box">
 
-    {% for item in activity_feed %}
-        <div style="margin-bottom:10px;">
-            <b>{{ item.time }}</b><br>
-            User: {{ item.user }} <br>
-            Action: {{ item.action }} <br>
-            IP: {{ item.ip }}
-            <hr>
-        </div>
-    {% endfor %}
+{% for item in activity_feed %}
+
+<div class="feed-item">
+
+    <b>{{ item.time }}</b><br><br>
+
+    User:
+    <span style="color:#60a5fa;">
+        {{ item.user }}
+    </span>
+
+    <br>
+
+    Action:
+
+    {% if "success" in item.action %}
+        <span class="action-success">{{ item.action }}</span>
+
+    {% elif "failed" in item.action %}
+        <span class="action-failed">{{ item.action }}</span>
+
+    {% elif "injection" in item.action %}
+        <span class="action-injection">{{ item.action }}</span>
+
+    {% else %}
+        {{ item.action }}
+    {% endif %}
+
+    <br>
+
+    IP Address:
+    <span style="color:#cbd5e1;">
+        {{ item.ip }}
+    </span>
+
+</div>
+
+{% endfor %}
 
 </div>
 

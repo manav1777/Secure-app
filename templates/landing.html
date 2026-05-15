@@ -1,27 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Secure App Demo</title>
-</head>
+{% extends "base.html" %}
+{% block title %}Secure App Demo{% endblock %}
 
-<body style="text-align:center; font-family:Arial; padding:50px;">
+{% block content %}
 
-    <h1>Secure Activity Monitoring System</h1>
+<div class="container">
 
-    <p>
-        This project simulates a secure login system with activity tracking,
-        logging, and basic intrusion detection features.
+    <h1 style="font-size:38px; color:#0b3d91; margin-bottom:15px;">
+        Secure Activity Monitoring System
+    </h1>
+
+    <p style="font-size:18px; max-width:750px; margin:0 auto 30px; line-height:1.7; color:#334155;">
+        This cybersecurity project simulates a secure authentication and monitoring platform with real time activity logging, failed login detection, session management, and basic intrusion monitoring capabilities.
     </p>
 
-    <br>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:15px; margin-top:20px;">
 
-    <a href="/demo">
-        <button>Try Demo (No Login Needed)</button>
-    </a>
+        <a href="/demo">
+            <button style="width:260px;">
+                Try Demo
+            </button>
+        </a>
 
-    <a href="/login">
-        <button>Login</button>
-    </a>
+        <a href="/login">
+            <button style="width:260px; background:#334155;">
+                Login
+            </button>
+        </a>
 
-</body>
-</html>
+    </div>
+
+    <div style="
+        margin-top:50px;
+        background:#f1f5f9;
+        padding:25px;
+        border-radius:14px;
+        max-width:750px;
+        margin-left:auto;
+        margin-right:auto;
+        text-align:left;
+    ">
+
+        <h2 style="color:#0b3d91;">Project Features</h2>
+
+        <p style="line-height:1.8; color:#334155;">
+            • Secure password hashing with bcrypt<br>
+            • Activity logging and monitoring<br>
+            • Failed login detection<br>
+            • Session based authentication<br>
+            • Suspicious activity alerts<br>
+            • Security dashboard visualization
+        </p>
+
+        <h2 style="color:#0b3d91; margin-top:20px;">Tech Stack</h2>
+
+        <p style="color:#334155;">
+            Python Flask HTML CSS Bcrypt
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
