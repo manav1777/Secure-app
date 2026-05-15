@@ -18,18 +18,19 @@
         header {
             background-color: #0b3d91;
             color: white;
-            padding: 15px;
+            padding: 18px;
             text-align: center;
             font-size: 22px;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         main {
             max-width: 900px;
             margin: 40px auto;
-            padding: 25px;
+            padding: 30px;
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.12);
         }
 
@@ -38,31 +39,72 @@
             text-decoration: none;
         }
 
-        input, button {
+        /* INPUTS */
+        input, textarea {
+            width: 100%;
             padding: 14px;
             margin: 10px 0;
             border-radius: 10px;
             border: 1px solid #cbd5e1;
             font-size: 16px;
+            box-sizing: border-box;
         }
 
+        /* MAIN BUTTON */
         button {
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: none;
             background: #2563eb;
             color: white;
-            border: none;
+            font-size: 16px;
             cursor: pointer;
-            transition: 0.2s;
+            margin: 5px 5px 5px 0;
+            transition: 0.2s ease-in-out;
         }
 
         button:hover {
             background: #1d4ed8;
         }
 
+        /* SECONDARY BUTTON (Try Example / Details / Back) */
+        .secondary-btn {
+            background: #334155;
+        }
+
+        .secondary-btn:hover {
+            background: #1f2937;
+        }
+
+        /* CARD STYLE */
         .card {
             background: #f1f5f9;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 18px;
+            border-radius: 12px;
             margin-top: 15px;
+        }
+
+        /* HEADINGS */
+        h1 {
+            font-size: 32px;
+            color: #0b3d91;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #0b3d91;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        /* BUTTON ROW */
+        .button-row {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
     </style>
 </head>
