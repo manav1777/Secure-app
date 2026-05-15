@@ -3,9 +3,9 @@
 
 {% block content %}
 
-<div class="container">
+<div style="text-align:center;">
 
-    <h1 style="font-size:38px; color:#0b3d91; margin-bottom:15px;">
+    <h1>
         Secure Activity Monitoring System
     </h1>
 
@@ -13,7 +13,7 @@
         This cybersecurity project simulates a secure authentication and monitoring platform with real time activity logging, failed login detection, session management, and basic intrusion monitoring capabilities.
     </p>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap:15px; margin-top:20px;">
+    <div class="button-row" style="justify-content:center;">
 
         <a href="/demo">
             <button style="width:260px;">
@@ -22,27 +22,18 @@
         </a>
 
         <a href="/login">
-            <button style="width:260px; background:#334155;">
+            <button class="secondary-btn" style="width:260px;">
                 Login
             </button>
         </a>
 
     </div>
 
-    <div style="
-        margin-top:50px;
-        background:#f1f5f9;
-        padding:25px;
-        border-radius:14px;
-        max-width:750px;
-        margin-left:auto;
-        margin-right:auto;
-        text-align:left;
-    ">
+    <div class="card" style="margin-top:40px; text-align:left;">
 
-        <h2 style="color:#0b3d91;">Project Features</h2>
+        <h2>Project Features</h2>
 
-        <p style="line-height:1.8; color:#334155;">
+        <p style="line-height:1.8;">
             • Secure password hashing with bcrypt<br>
             • Activity logging and monitoring<br>
             • Failed login detection<br>
@@ -51,9 +42,9 @@
             • Security dashboard visualization
         </p>
 
-        <h2 style="color:#0b3d91; margin-top:20px;">Tech Stack</h2>
+        <h2 style="margin-top:20px;">Tech Stack</h2>
 
-        <p style="color:#334155;">
+        <p>
             Python Flask HTML CSS Bcrypt
         </p>
 

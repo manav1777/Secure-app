@@ -3,43 +3,39 @@
 
 {% block content %}
 
-<h2 style="font-size:28px; color:#0b3d91;">
+<h2>
     Login
 </h2>
 
 <form action="/login" method="POST">
     <input type="text" name="username" required placeholder="Username">
     <input type="password" name="password" required placeholder="Password">
-    <button type="submit">Login</button>
+
+    <button type="submit">
+        Login
+    </button>
 </form>
 
-<div style="
-    margin-top:20px;
-    font-size:16px;
-    color:#334155;
-    line-height:1.6;
-">
+<div class="card">
 
     <p style="font-size:18px; font-weight:600;">
-        Demo account
-
+        Demo Account
     </p>
 
-    <p style="font-size:16px; color:#334155; margin-top:15px;">
-    New user? <a href="/register">Create account</a>
-    </p>
-
-    <p style="font-size:16px;">
+    <p>
         Username: jack<br>
-        Password: jack
+        Password: jack123
+    </p>
+
+    <p style="margin-top:15px;">
+        New user? <a href="/register">Create account</a>
     </p>
 
 </div>
 
-<!-- BACK BUTTON -->
-<div style="margin-top:25px;">
+<div style="margin-top:20px;">
     <a href="/">
-        <button style="background:#334155;">
+        <button class="secondary-btn">
             Back to Main Page
         </button>
     </a>
