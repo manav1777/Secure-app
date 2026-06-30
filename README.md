@@ -1,8 +1,8 @@
-# Secure Activity Monitoring System
+# Secure App System
 
 ## Overview
 
-The **Secure Activity Monitoring System** is a Python and Flask web application that simulates a secure authentication platform with user activity monitoring and basic intrusion detection capabilities. The application demonstrates secure login practices, password hashing, session management, and real-time security event tracking through an interactive dashboard.
+The **Secure App System** is a Python and Flask web application that simulates a secure authentication platform with user activity monitoring and basic intrusion detection capabilities. The application demonstrates secure login practices, password hashing, session management, and real-time security event tracking through an interactive dashboard.
 
 This project was built to explore authentication security and demonstrate how security monitoring can help detect suspicious user activity.
 
